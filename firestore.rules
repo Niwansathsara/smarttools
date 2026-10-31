@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isVerifiedAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'niwansathsara76@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    // Homepage announcements are public to read, but only the verified admin can write.
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow create, update, delete: if isVerifiedAdmin();
+    }
+
+    // Deny access to all other collections unless explicit rules are added later.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

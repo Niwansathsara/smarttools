@@ -1,0 +1,43 @@
+SMARTTOOLS WEBSITE – මුලින්ම කියවන්න
+====================================
+
+1. ZIP එක Extract කරන්න.
+2. Extract කළ smarttools-site folder එකේ index.html, all-tools.html, assets, tools වැනි දේවල් තියෙනවාද බලන්න.
+3. ඔයාගේ GitHub repository එකට මේ folder එක ඇතුළේ තියෙන සියලුම files/folders upload කරන්න. index.html repository root එකේම තිබිය යුතුයි.
+4. Website එක deploy කරලා බලන්න. මුලින්ම PDF merge, Image Compressor, JSON Formatter, Word Counter, QR Generator වගේ tools කිහිපයක් test කරන්න.
+
+LOGIN / SIGNUP / ADMIN සකස් කිරීම
+--------------------------------
+Firebase නැතුව account features ක්‍රියාත්මක වෙන්නේ නැහැ. ඒවා ආරක්ෂිතව සකස් කිරීමට:
+
+1. https://console.firebase.google.com/ වෙත ගිහින් Firebase project එකක් හදන්න.
+2. Authentication → Sign-in method → Email/Password Enable කරන්න.
+3. Firestore Database එකක් Create කරන්න.
+4. Firebase Web App config එක copy කරන්න.
+5. assets/js/firebase-config.js file එක open කර apiKey, authDomain, projectId, appId හිස් තැන්වල Firebase values දාන්න.
+6. Admin account එකක් ලෙස niwansathsara76@gmail.com ලියාපදිංචි කර, Firebase එකෙන් එන verification email එකෙන් verify කරන්න.
+7. firestore.rules file එකේ rules Firebase Console → Firestore → Rules තුළ paste කර Publish කරන්න.
+8. Firebase Authentication → Settings → Authorized domains තුළ ඔයාගේ live website domain එක Add කරන්න.
+
+Admin Dashboard එකෙන් දැනට Homepage Latest Updates publish / delete කරන්න පුළුවන්. Firestore Rules වලින් verified admin email එකට පමණක් write permission දෙයි. Public visitors ලාට website එකේ tools භාවිතා කරන්න පුළුවන්; login අනිවාර්ය නැහැ.
+
+GOOGLE ADSENSE
+--------------
+Website එකේ Advertisement Space කියලා reserve කරලා තියෙන තැන් තියෙනවා. මේවා live Ads නෙවෙයි. Google AdSense account එක approve වුණාට පස්සේ Google දෙන publisher ID සහ ad code එක දාන්න. වෙන කෙනෙකුගේ Publisher ID එක භාවිතා කරන්න එපා. Approval හෝ ආදායම සහතික නැහැ. Users ලාට Ads බලන්න බල කිරීමක් කරන්න එපා.
+
+DOMAIN / SEO
+------------
+robots.txt සහ sitemap.xml තුළ YOUR-DOMAIN.com තියෙන තැන ඔයාගේ real domain එක දාන්න. පසුව Google Search Console එකට domain එක Add කර sitemap.xml Submit කරන්න.
+
+වැදගත්
+------
+- Website එක English-first සහ worldwide audience එකකට design කරලා තියෙනවා. Sinhala Tools වෙනම category එකක් ලෙස ඇත.
+- Tool pages 80ක් වෙන වෙනම URL සහිතව තියෙනවා.
+- PDF/Image processing වලදී supporting libraries කිහිපයක් CDN එකෙන් load වෙන නිසා internet connection එකක් අවශ්‍යයි.
+- Singlish to Sinhala tool එක basic offline word helper එකක් පමණයි; සම්පූර්ණ නිවැරදි transliteration engine එකක් නොවේ.
+- Sinhala legacy font encoding සියල්ලටම universal converter එකක් නැති නිසා Sinhala Text Converter එක Unicode normalize/clean කිරීමයි කරන්නේ.
+- A/L සහ O/L grade boundaries editable examples. Official exam grading scheme එක verify කරන්න.
+- Currency converter එක third-party exchange-rate service එකක් භාවිතා කරනවා; rate එක ප්‍රමාද විය හැක.
+- PDF Compressor එක pages rasterize කරන නිසා search/select කළ හැකි text අහිමි වෙන්න පුළුවන්.
+- Contact email: smarttoolsgns@gmail.com
+- Created by: G Niwan Sathsara

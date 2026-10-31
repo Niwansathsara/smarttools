@@ -1,0 +1,16 @@
+SMARTTOOLS — GITHUB WEBSITE UPLOAD (NO GITHUB DESKTOP NEEDED)
+
+1. Download this ZIP and extract it on your computer.
+2. Open the extracted folder. You should directly see index.html, assets, tools, about.html, etc.
+3. Open https://github.com/niwansathsara/smart-tools in your browser.
+4. Use Add file > Upload files. Drag the CONTENTS of the extracted folder (not the ZIP file and not the containing folder) into GitHub.
+5. Commit changes to the main branch. Existing files with the same names should be replaced. Make sure the assets and tools folders are uploaded at repository root.
+6. Wait for GitHub Pages to publish, then open https://niwansathsara.github.io/smart-tools/ and press Ctrl+F5.
+
+IMPORTANT CHECKS
+- Repository root must show index.html, assets/ and tools/ together.
+- Open https://niwansathsara.github.io/smart-tools/assets/css/styles.css : it must show CSS code, not a 404 page.
+- Open https://niwansathsara.github.io/smart-tools/assets/js/app.js : it must show JavaScript code, not a 404 page.
+- Tool pages now use the fixed SmartTools project base URL so nested pages resolve CSS and JavaScript from the correct assets folder.
+
+GitHub Desktop is NOT required. Do not delete the repository itself.

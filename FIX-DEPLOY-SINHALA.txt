@@ -1,0 +1,51 @@
+SMARTTOOLS – GitHub Pages upload fix
+====================================
+
+ඔයාට කලින් පෙන්වූ screenshot එකේ CSS සහ JavaScript load නොවීම නිසා website එක plain text ලෙස පෙනෙනවා.
+මෙම ZIP එක GitHub Pages සඳහා සකස් කර ඇත. ZIP එකේ ඇතුළත index.html, assets/ සහ tools/ එකම root මට්ටමේ ඇත.
+
+කරන්න ඕන දේ:
+1. මේ ZIP එක Download කර Extract කරන්න.
+2. Extract කළ folder එක open කරන්න.
+3. ඒ folder එක ඇතුළේ ඇති සියලුම files සහ folders select කරන්න (index.html, assets, tools, about.html, ...).
+4. GitHub → niwansathsara/smart-tools repository → Code වෙත යන්න.
+5. Add file → Upload files තෝරන්න.
+6. Extract කළ folder එක ඇතුළේ ඇති සියලුම දේ drag-and-drop කරන්න. ZIP file එකම upload කරන්න එපා. smarttools-github-pages නමැති පිටත folder එක හෝ වෙනත් folder එකක් repository ඇතුළට දාන්න එපා.
+7. Repository root එකේ index.html සමඟම assets/ සහ tools/ folders පෙනෙන බව තහවුරු කරන්න.
+8. Commit changes කරන්න.
+9. GitHub repository → Settings → Pages වෙත ගොස් Branch = main සහ Folder = /(root) තෝරා Save කරන්න (දැනටමත් එසේ නම් වෙනස් කරන්න අවශ්‍ය නැහැ).
+10. Deploy වුණාට පසු Ctrl + F5 කරලා website එක refresh කරන්න.
+
+Repository root එක මේ වගේ තිබිය යුතුයි:
+index.html
+about.html
+all-tools.html
+auth.html
+category.html
+contact.html
+privacy.html
+terms.html
+assets/
+  css/styles.css
+  js/app.js
+  js/data.js
+  js/tool-engine.js
+  js/auth.js
+  js/admin.js
+  favicon.svg
+tools/
+  json-formatter/index.html
+  ... (අනෙකුත් tools 80ම)
+
+CSS test:
+https://niwansathsara.github.io/smart-tools/assets/css/styles.css
+මේ link එක open කළාම CSS code එකක් පෙන්විය යුතුයි; 404 / Not Found පෙන්වන්නේ නම් assets folder එක වැරදි තැනක හෝ upload නොවී ඇත.
+
+JavaScript test:
+https://niwansathsara.github.io/smart-tools/assets/js/app.js
+මේ link එක open කළාම JavaScript code එක පෙන්විය යුතුයි.
+
+වැදගත්:
+- Existing repository content එක replace කරනවා නම්, අවශ්‍ය වෙනත් files backup කරගන්න.
+- Firebase login/admin ක්‍රියාත්මක කිරීමට Firebase project config සහ rules setup අවශ්‍යයි.
+- Google AdSense සඳහා approval ලැබීමෙන් පසු publisher ID/ad code එක එකතු කළ යුතුයි.
