@@ -274,7 +274,7 @@ async function processFileTool(id){
       const imageData=new Uint8Array(await pageBlob.arrayBuffer());
       const pageWidthTwips=Math.round(baseVp.width*20),pageHeightTwips=Math.round(baseVp.height*20);
       const imageWidth=baseVp.width*96/72,imageHeight=baseVp.height*96/72;
-      const bgRun=new docx.ImageRun({data:imageData,transformation:{width:imageWidth,height:imageHeight},floating:{horizontalPosition:{relative:docx.HorizontalPositionRelativeFrom.PAGE,offset:0},verticalPosition:{relative:docx.VerticalPositionRelativeFrom.PAGE,offset:0},wrap:{type:docx.WrapType.NONE},behindDocument:true,allowOverlap:true,lockAnchor:true,zIndex:0}});
+      const bgRun=new docx.ImageRun({data:imageData,transformation:{width:imageWidth,height:imageHeight},floating:{horizontalPosition:{relative:docx.HorizontalPositionRelativeFrom.PAGE,offset:0},verticalPosition:{relative:docx.VerticalPositionRelativeFrom.PAGE,offset:0},wrap:{type:docx.TextWrappingType.NONE},behindDocument:true,allowOverlap:true,lockAnchor:true,zIndex:0}});
       const children=[new docx.Paragraph({children:[bgRun],spacing:{before:0,after:0}})];frameSpecs.push(null);
       for(const f of frames){
        const widthTwips=clamp(Math.round(f.w*20),160,31680),heightTwips=clamp(Math.round(f.h*20),180,31680);
