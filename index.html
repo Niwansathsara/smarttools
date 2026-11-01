@@ -148,7 +148,7 @@ if(t.id==='regex-tester')extra=field('Regular expression','regexPattern','e.g. \
 if(t.id==='timestamp-converter')extra=`<div class="field"><label>Input format</label><select id="timeMode"><option value="unix">Unix timestamp</option><option value="date">Date string</option></select></div>`;
 if(t.id==='lorem-ipsum')extra=field('Number of paragraphs','loremCount','3','number','3');
 if(t.id==='sinhala-keyboard')extra=`<div class="field"><label>Quick Sinhala keyboard</label><div class="keyboard" id="siKeys">${'අ ආ ඇ ඈ ඉ ඊ උ ඌ එ ඒ ඔ ඕ ක ඛ ග ඝ ච ජ ට ඩ ත ද න ප බ ම ය ර ල ව ස හ ළ ං ් ා ි ී ු ෙ ො'.split(' ').map(k=>`<button type="button" class="softbtn" style="padding:8px 10px" onclick="insertSinhalaKey('${k}')">${k}</button>`).join('')}</div></div>`;
-return `<h3>${t.name}</h3><div class="field"><label>${t.cat==='developer'?'Input code or data':'Your text'}</label><textarea id="toolInput" placeholder="${ph}"></textarea></div>${extra}<div class="workactions"><button class="primary" onclick="runGeneric('${t.id}')">${t.cat==='developer'?'Run tool':'Process text'} →</button><button class="ghost" onclick="document.getElementById('toolInput').value='';hideResult()">Clear</button></div><div id="resultbox" class="resultbox"><h4 id="resultTitle">Result</h4><div id="resultContent"></div><div class="workactions"><button class="softbtn" onclick="copyResult()">Copy result</button><button class="ghost" onclick="downloadResult()">Download .txt</button></div></div>`}
+return `<h3>${t.name}</h3>${t.id==='singlish-to-sinhala'?'<div class="notice sinhala-notice">Gemini AI converts your original Singlish input directly into Sinhala. Your text is sent securely to the SmartTools AI backend for conversion.</div>':''}<div class="field"><label>${t.cat==='developer'?'Input code or data':'Your text'}</label><textarea id="toolInput" placeholder="${ph}"></textarea></div>${extra}<div class="workactions"><button class="primary" onclick="runGeneric('${t.id}')">${t.cat==='developer'?'Run tool':'Process text'} →</button><button class="ghost" onclick="document.getElementById('toolInput').value='';hideResult()">Clear</button></div><div id="resultbox" class="resultbox"><h4 id="resultTitle">Result</h4><div id="resultContent"></div><div class="workactions"><button class="softbtn" onclick="copyResult()">Copy result</button><button class="ghost" onclick="downloadResult()">Download .txt</button></div></div>`}
 function colorPickerWorkspace(){return `<h3>Color Picker</h3><p style="color:#71809a;font-size:13px">Choose a color and copy its HEX, RGB or HSL value.</p><div class="field"><label>Select color</label><input id="chosenColor" type="color" value="#0875ee" oninput="showColor(this.value)" style="width:100%;height:76px;border:0;background:transparent;cursor:pointer"></div><div class="resultpreview" style="display:flex;gap:12px;align-items:center"><div id="colorSwatch" style="width:76px;height:76px;border-radius:13px;background:#0875ee"></div><div><b id="colorHex">#0875EE</b><div id="colorRgb" style="font-size:12px;color:#71809a;margin-top:5px">RGB(8, 117, 238)</div><div id="colorHsl" style="font-size:12px;color:#71809a;margin-top:4px">HSL(210, 93%, 48%)</div></div></div><div class="workactions"><button class="softbtn" onclick="copyColor('hex')">Copy HEX</button><button class="ghost" onclick="copyColor('rgb')">Copy RGB</button><button class="ghost" onclick="copyColor('hsl')">Copy HSL</button></div>`}
 function imageBase64Workspace(){return `<h3>Image to Base64</h3><div class="dropzone" onclick="document.getElementById('fileInput').click()"><div class="uploadico">🧬</div><b>Choose an image</b><span>Convert a local image into a Base64 data URL</span></div><input class="fileinput" id="fileInput" type="file" accept="image/*" onchange="setFiles(this.files)"><div id="fileList" class="field" style="font-size:12px;color:#617390">No image selected</div><div class="workactions"><button class="primary" onclick="processImageTool('image-to-base64')">Convert to Base64 →</button><button class="ghost" onclick="clearFiles()">Clear</button></div><div id="resultbox" class="resultbox"><h4>Base64 result</h4><textarea id="base64Result" readonly style="width:100%;min-height:120px;border:1px solid #dce6f7;border-radius:9px;padding:10px"></textarea><div class="workactions"><button class="softbtn" onclick="copyTextSafely(document.getElementById('base64Result').value)">Copy Base64</button><button class="ghost" onclick="downloadBlob(new Blob([document.getElementById('base64Result').value]),'image-base64.txt')">Download text</button></div></div>`}
 function insertSinhalaKey(k){let x=document.getElementById('toolInput');if(!x)return;let a=x.selectionStart,b=x.selectionEnd;x.value=x.value.slice(0,a)+k+x.value.slice(b);x.focus();x.selectionStart=x.selectionEnd=a+k.length}
@@ -181,7 +181,11 @@ window.SMARTTOOLS_GEMINI_ENHANCE_ENDPOINT = 'https://smarttools-gemini.niwansath
 async function smartToolsGeminiEnhance(mode, input, output, toolId){
  const endpoint=String(window.SMARTTOOLS_GEMINI_ENHANCE_ENDPOINT||'').trim();
  if(!endpoint || !/^https:\/\//i.test(endpoint)) return null;
- const source=String(input??'').slice(0,9000), current=String(output??'').slice(0,9000);
+ const source=String(input??'').slice(0,9000);
+ // For Singlish conversion, send only the original Roman-letter input.
+ // The local transliterator output is intentionally excluded because its
+ // imperfect Sinhala spelling can bias the Gemini correction.
+ const current=mode==='singlish_to_sinhala'?'':String(output??'').slice(0,9000);
  if(!source.trim() && !current.trim()) return null;
  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),45000);
  try{
@@ -190,7 +194,11 @@ async function smartToolsGeminiEnhance(mode, input, output, toolId){
   if(!response.ok) throw new Error(payload.error||`Gemini enhancement failed (${response.status}).`);
   const text=String(payload.text||'').trim();return text||null;
  }catch(error){
-  console.warn('SmartTools Gemini enhancement unavailable; keeping deterministic result.',error);
+  console.error('SmartTools Gemini enhancement failed:',error);
+  // Do not silently show the poor local transliteration as if it were AI output.
+  if(mode==='singlish_to_sinhala'){
+   throw new Error('Gemini Sinhala conversion could not be completed. Check the Worker connection and try again. Details: '+String(error?.message||error));
+  }
   return null;
  }finally{clearTimeout(timeout)}
 }
@@ -706,7 +714,7 @@ async function processImageTool(id){
   else if(id==='url-slug-generator'){out=v.toLocaleLowerCase().trim().replace(/\s+/g,'-').replace(/[^\p{L}\p{N}-]+/gu,'').replace(/-+/g,'-').replace(/^-|-$/g,'');}
   else if(id==='lorem-ipsum'){const n=Math.min(20,Math.max(1,Number(document.getElementById('loremCount').value)||3));out=Array.from({length:n},()=> 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.').join('\n\n');}
   else if(id==='text-cleaner'){out=v.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').replace(/\r\n/g,'\n').replace(/[ \t]+$/gm,'').trim();}
-  else if(id==='singlish-to-sinhala'){out=singlish(v);title='Sinhala transliteration result';}
+  else if(id==='singlish-to-sinhala'){out='';title='Sinhala result (Gemini AI)';}
   else if(id==='sinhala-unicode'){out=document.getElementById('siMode').value==='decode'?decodeUnicode(v):[...v].map(ch=>'U+'+ch.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join(' ');}
   else if(id==='sinhala-text-formatter'){out=v.replace(/[ \t]+/g,' ').replace(/\s+([,.;!?])/g,'$1').replace(/\n{3,}/g,'\n\n').trim();}
   else if(id==='sinhala-keyboard'){out=v;}
@@ -715,7 +723,11 @@ async function processImageTool(id){
   // Gemini improves language quality only where it adds value. Exact encoders,
   // code formatters, hashes and other deterministic transformations stay local.
   if(id==='singlish-to-sinhala'){
-   const improved=await smartToolsGeminiEnhance('singlish_to_sinhala',v,out,id);if(improved)out=improved;
+   // Gemini is the primary conversion engine for this tool. Do not run the
+   // inaccurate local letter-by-letter transliterator as a fallback.
+   const improved=await smartToolsGeminiEnhance('singlish_to_sinhala',v,'',id);
+   if(!improved)throw new Error('Gemini returned an empty Sinhala result. Please try again.');
+   out=improved;
   }else if(id==='sinhala-text-formatter'){
    const improved=await smartToolsGeminiEnhance('sinhala_proofread',v,out,id);if(improved)out=improved;
   }
