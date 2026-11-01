@@ -177,10 +177,7 @@ function renderTool(id){let t=byId(id);if(!t){go('#/all-tools');return}clearView
  window.scrollTo({top:0,behavior:'smooth'});}
 /* Gemini runs silently as a quality layer on selected outputs. The deterministic
    tool remains the source of truth; Gemini never changes calculated values or files. */
-
-window.SMARTTOOLS_GEMINI_ENHANCE_ENDPOINT =
-  'https://smarttools-gemini.niwansathsara76.workers.dev/api/enhance';
-
+window.SMARTTOOLS_GEMINI_ENHANCE_ENDPOINT = 'https://smarttools-gemini.niwansathsara76.workers.dev/api/enhance';
 async function smartToolsGeminiEnhance(mode, input, output, toolId){
  const endpoint=String(window.SMARTTOOLS_GEMINI_ENHANCE_ENDPOINT||'').trim();
  if(!endpoint || !/^https:\/\//i.test(endpoint)) return null;
