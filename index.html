@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>window.pdfjsReady=import("https://cdn.jsdelivr.net/npm/pdfjs-dist@6.4.299/build/pdf.mjs").then(lib=>{window.pdfjsLib=lib;lib.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@6.4.299/build/pdf.worker.mjs";return lib;}).catch(error=>{console.error("PDF.js could not load",error);throw error;});</script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
@@ -112,9 +112,9 @@ function fileWorkspace(t){
  if(t.id==='add-page-numbers')options=`<div class="field"><label for="optPosition">Number position</label><select id="optPosition"><option value="bottom-center">Bottom center</option><option value="bottom-right">Bottom right</option><option value="top-right">Top right</option></select></div>`;
  if(t.id==='compress-pdf')options=`<div class="field"><label for="optQuality">Image quality</label><select id="optQuality"><option value="0.72">Balanced</option><option value="0.55">Smaller file</option><option value="0.88">Higher quality</option></select></div><div class="notice">This image-based compression can reduce file size, but selectable/searchable text is not retained in the output.</div>`;
  if(t.id==='pdf-to-jpg')options=`<div class="field"><label for="optQuality">Image resolution</label><select id="optQuality"><option value="1.5">Standard</option><option value="2">High</option><option value="2.5">Very high</option></select></div>`;
- if(t.id==='pdf-to-word')options=`<div class="field"><label for="pdfWordLayout">Word conversion mode</label><select id="pdfWordLayout" onchange="document.getElementById('pdfEditableSettings').style.display=this.value==='visual'?'none':'block'"><option value="editable-layout" selected>Keep page layout + editable words (recommended)</option><option value="editable">Editable flowing text (simple document)</option></select></div><div class="notice sinhala-notice"><b>Editable layout mode:</b> SmartTools keeps page images, diagrams, rules and non-text artwork in the page background, then places each recognized text line in a separate editable Word text frame at its original position. Words can be selected, rewritten, deleted and restyled. Sinhala OCR is grouped by full text lines to better preserve vowel signs and joined characters. Page artwork, pictures and detected rules are retained in the background. Complex pages may still need small adjustments.<hr style="border:0;border-top:1px solid #dce6f7;margin:10px 0"><span lang="si"><b>මෙම ක්‍රමයේදී</b> PDF එකේ පින්තූර, වගු රේඛා සහ වෙනත් රූප පසුබිමේ තබා, අකුරු පේළි ලෙස වෙන වෙනම Edit කළ හැකි Word Text Frames බවට පත් කරනවා. වචන Select කරලා වෙනස් කිරීම, මකා දැමීම සහ Font වෙනස් කිරීම කළ හැකියි. Sinhala OCR ප්‍රතිඵල පරීක්ෂා කරන්න; සංකීර්ණ පිටු සඳහා සුළු සකස් කිරීම් අවශ්‍ය විය හැකියි.</span></div><div id="pdfEditableSettings"><div class="field"><label for="pdfWordFont">Font for editable text</label><select id="pdfWordFont"><option value="Noto Sans Sinhala" selected>Noto Sans Sinhala (recommended)</option><option value="Abhaya Libre">Abhaya Libre</option><option value="Iskoola Pota">Iskoola Pota (if installed)</option><option value="Arial">Arial</option></select></div><div class="field"><label for="pdfWordMode">Sinhala / scanned PDF text recognition</label><select id="pdfWordMode"><option value="auto" selected>Automatic — use PDF text; OCR scanned / legacy Sinhala</option><option value="ocr">Force Sinhala + English OCR</option></select></div><div class="notice">For best editable results, use a selectable-text Unicode PDF. OCR converts scanned pages into editable text, but complex Sinhala conjuncts, punctuation and low-resolution scans may need proofreading.</div></div>`;
+ if(t.id==='pdf-to-word')options=`<div class="field"><label for="pdfWordLayout">Word conversion mode</label><select id="pdfWordLayout" onchange="document.getElementById('pdfEditableSettings').style.display=this.value==='visual'?'none':'block'"><option value="editable-layout" selected>Keep page layout + editable words (recommended)</option><option value="editable">Editable flowing text (simple document)</option></select></div><div class="notice sinhala-notice"><b>Editable layout mode:</b> For text-based PDFs, SmartTools filters native text-paint operations before rendering the page background. This keeps embedded images, table borders, rules and vector artwork without painting over pixels. Extracted text is then placed in editable Word frames at the original coordinates. Scanned image-only PDFs are handled with Sinhala + English OCR and conservative background cleanup; review the result carefully.<hr style="border:0;border-top:1px solid #dce6f7;margin:10px 0"><span lang="si"><b>මෙම ක්‍රමයේදී</b> Text-based PDF වලදී මුල් text drawing operations ඉවත් කරලා images, table rules සහ vector artwork නොවෙනස්ව තබනවා. ඉන්පසු අකුරු මුල් ස්ථානවල editable Word text frames ලෙස දානවා. Scan කළ PDF සඳහා OCR මගින් අකුරු හඳුනාගෙන පිටුවේ පෙනුමට ගැළපෙන editable text frames සාදනවා. රූපමය පසුබිම්වලදී ප්‍රතිඵල පරීක්ෂා කරන්න.</span></div><div id="pdfEditableSettings"><div class="field"><label for="pdfWordFont">Font for editable text</label><select id="pdfWordFont"><option value="Noto Sans Sinhala" selected>Noto Sans Sinhala (recommended)</option><option value="Abhaya Libre">Abhaya Libre</option><option value="Iskoola Pota">Iskoola Pota (if installed)</option><option value="Arial">Arial</option></select></div><div class="field"><label for="pdfWordMode">Sinhala / scanned PDF text recognition</label><select id="pdfWordMode"><option value="auto" selected>Automatic — use PDF text; OCR scanned / legacy Sinhala</option><option value="ocr">Force Sinhala + English OCR</option></select></div><div class="notice">For best editable results, use a selectable-text Unicode PDF. OCR converts scanned pages into editable text, but complex Sinhala conjuncts, punctuation and low-resolution scans may need proofreading.</div></div>`;
  if(t.id==='word-to-pdf')options=`<div class="notice sinhala-notice"><b>Sinhala support:</b> Sinhala DOCX text is rendered with Noto Sans Sinhala where available. For best results, use Unicode Sinhala text and keep a copy of your original document.</div>`;
- const helper=t.id==='pdf-to-word'?'Keep the original PDF page layout in Word, or choose editable text when you need to change individual words.':t.id==='word-to-pdf'?'Convert a modern .docx Word document into a downloadable PDF.':'Your files are processed in this browser where supported.';
+ const helper=t.id==='pdf-to-word'?'Best for text-based PDFs: keeps images, table rules and vector artwork while placing editable text at its original position. Scanned PDFs use OCR with positioned editable text where detected.':t.id==='word-to-pdf'?'Convert a modern .docx Word document into a downloadable PDF.':'Your files are processed in this browser where supported.';
  return `<h3>${t.name}</h3><p class="workspace-intro">${helper}</p><div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="dropFiles(event)"><div class="uploadico">☁️</div><b>Choose ${multiple?'files':'a file'} or drag ${multiple?'them':'it'} here</b><span>${t.id==='word-to-pdf'?'DOCX Word documents':(['jpg-to-pdf','png-to-pdf'].includes(t.id)?'JPG or PNG images':'PDF documents')} · Local browser processing</span></div><input class="fileinput" id="fileInput" type="file" accept="${accept}" ${multiple?'multiple':''} onchange="setFiles(this.files)"><div id="fileList" class="file-list">No files selected</div>${options}<div class="workactions"><button class="primary" id="processFileButton" onclick="processFileTool('${t.id}')">${t.id==='word-to-pdf'||t.id==='pdf-to-word'?'Convert document':'Process files'} <span>→</span></button><button class="ghost" onclick="clearFiles()">Clear</button></div><div id="resultbox" class="resultbox"><h4>✓ Your result is ready</h4><div id="resultContent"></div></div>`;
 }
 function genericWorkspace(t){let ph='Enter or paste your content here...';let extra='';
@@ -164,6 +164,7 @@ async function processFileTool(id){
  const finish=()=>{if(btn){btn.disabled=false;btn.innerHTML=btn.dataset.old||'Process files →';}};
  const ok=(title,detail,meta='')=>showResult(`<div class="success-result"><div class="success-mark">✓</div><div><b>${escapeHtml(title)}</b><p>${escapeHtml(detail)}</p>${meta?`<small>${escapeHtml(meta)}</small>`:''}</div></div>`);
  try{
+  if(['pdf-to-word','pdf-to-jpg','compress-pdf'].includes(id)){if(!window.pdfjsReady)throw Error('PDF.js loader is unavailable. Reload the page.');await window.pdfjsReady;}
   const first=uploadedFiles[0];
   const ext=(first.name.split('.').pop()||'').toLowerCase();
   if(id==='word-to-pdf'&&ext!=='docx')throw Error('Please upload a Microsoft Word .docx file.');
@@ -192,7 +193,6 @@ async function processFileTool(id){
   const bytes=await first.arrayBuffer();
   if(id==='pdf-to-word'){
    if(!window.pdfjsLib||!window.docx||!window.JSZip)throw Error('The PDF-to-Word libraries did not load. Check your internet connection, reload, and try again.');
-   pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
    const pdf=await pdfjsLib.getDocument({data:new Uint8Array(bytes),useSystemFonts:true,disableFontFace:false}).promise;
    const layoutMode=document.getElementById('pdfWordLayout')?.value||'editable-layout';
    if(layoutMode==='editable-layout'){
@@ -204,7 +204,7 @@ async function processFileTool(id){
     const chosenFont=document.getElementById('pdfWordFont')?.value||'Noto Sans Sinhala';
     const mode=document.getElementById('pdfWordMode')?.value||'auto';
     if(!window.Tesseract)throw Error('Sinhala OCR library could not load. Check your internet connection and reload.');
-    const sections=[],frameSpecs=[];let totalEditable=0,totalOCR=0,totalSkipped=0,ocrWorker=null;
+    const sections=[],frameSpecs=[];let totalEditable=0,totalOCR=0,totalSkipped=0,totalScannedMasks=0,totalSkippedMasks=0,ocrWorker=null;
     const ensureOCR=async()=>{
      if(ocrWorker)return ocrWorker;
      ocrWorker=await Tesseract.createWorker('sin+eng',1,{logger:m=>{if(m.status==='recognizing text'&&btn)btn.innerHTML=`<span class="spinner"></span> Sinhala OCR · page ${m.page||''} · ${Math.round((m.progress||0)*100)}%`;}});
@@ -216,76 +216,64 @@ async function processFileTool(id){
      if(!text||!Number.isFinite(x)||!Number.isFinite(y)||!Number.isFinite(w)||!Number.isFinite(h))return;
      arr.push({text,x:Math.max(0,x),y:Math.max(0,y),w:Math.max(8,w),h:Math.max(7,h),fontSize:clamp(fontSize||11,5,60),source});
     };
-    // Remove only text-like pixels from the page artwork. The previous version
-    // painted a solid rectangle over every line; that erased table rules, borders
-    // and underlines. This mask keeps long straight rules and reconstructs only
-    // the small glyph pixels around editable text.
-    const eraseGlyphPixels=(ctx,frame,scale)=>{
-     const canvas=ctx.canvas,pad=Math.max(2,Math.round((frame.fontSize||10)*scale*.16));
-     const x0=clamp(Math.floor(frame.x*scale)-pad,0,canvas.width-1),y0=clamp(Math.floor(frame.y*scale)-pad,0,canvas.height-1);
-     const x1=clamp(Math.ceil((frame.x+frame.w)*scale)+pad,x0+1,canvas.width),y1=clamp(Math.ceil((frame.y+frame.h)*scale)+pad,y0+1,canvas.height);
-     const width=x1-x0,height=y1-y0;if(width<2||height<2)return;
-     let image;try{image=ctx.getImageData(x0,y0,width,height)}catch{return;}
-     const data=image.data,total=width*height,lum=new Float32Array(total),candidate=new Uint8Array(total),preserve=new Uint8Array(total);
-     const border=[[],[],[]];
-     const pushBorder=i=>{const k=i*4;border[0].push(data[k]);border[1].push(data[k+1]);border[2].push(data[k+2]);};
-     for(let x=0;x<width;x++){pushBorder(x);pushBorder((height-1)*width+x);}
-     for(let y=1;y<height-1;y++){pushBorder(y*width);pushBorder(y*width+width-1);}
-     const median=a=>{a.sort((u,v)=>u-v);return a[Math.floor(a.length/2)]||255;};
-     const bg=[median(border[0]),median(border[1]),median(border[2])],bgLum=.2126*bg[0]+.7152*bg[1]+.0722*bg[2];
-     let candidateCount=0;
-     for(let i=0;i<total;i++){
-      const k=i*4,r=data[k],g=data[k+1],b=data[k+2],l=.2126*r+.7152*g+.0722*b;lum[i]=l;
-      const dist=Math.hypot(r-bg[0],g-bg[1],b-bg[2]);
-      // Limit to pixels that contrast strongly with their immediate local background.
-      // This also catches light text on a dark panel, not only black text on white.
-      if(dist>54&&Math.abs(l-bgLum)>34){candidate[i]=1;candidateCount++;}
+    // Scanned PDFs store the whole page as one image. OCR gives us editable text
+    // boxes, but those letters must first be removed from the background image to
+    // avoid duplicate text. This conservative cleanup patches only OCR word boxes
+    // on low-texture paper and restores long horizontal/vertical rules afterwards.
+    const maskScannedTextFromCanvas=(targetCanvas,ocrData,scale)=>{
+     const c=targetCanvas.getContext('2d',{willReadFrequently:true});if(!c)return {masked:0,skipped:0};
+     const w=targetCanvas.width,h=targetCanvas.height;if(!w||!h)return {masked:0,skipped:0};
+     const snap=c.getImageData(0,0,w,h),src=snap.data,dst=new Uint8ClampedArray(src);
+     const words=(ocrData.words||[]).filter(q=>q&&q.bbox&&String(q.text||'').trim()&&Number(q.confidence??100)>=28);
+     const fallback=(ocrData.lines||[]).filter(q=>q&&q.bbox&&String(q.text||'').trim()&&Number(q.confidence??100)>=24);
+     const boxes=(words.length?words:fallback).map(q=>{const b=q.bbox,pad=2.2;return {x0:Math.max(0,Math.floor(b.x0-pad)),y0:Math.max(0,Math.floor(b.y0-pad)),x1:Math.min(w,Math.ceil(b.x1+pad)),y1:Math.min(h,Math.ceil(b.y1+pad))};}).filter(b=>b.x1-b.x0>2&&b.y1-b.y0>2);
+     if(!boxes.length)return {masked:0,skipped:0};
+     const lum=(i)=>.2126*src[i]+.7152*src[i+1]+.0722*src[i+2];
+     const horizontal=new Map(),vertical=new Map();
+     // Detect only long continuous strokes, not ordinary character strokes.
+     const minH=Math.max(28,Math.round(w*.075)),minV=Math.max(28,Math.round(h*.075));
+     for(let y=0;y<h;y++){let start=-1;for(let x=0;x<=w;x++){const dark=x<w&&lum((y*w+x)*4)<145;if(dark&&start<0)start=x;if((!dark||x===w)&&start>=0){if(x-start>=minH)horizontal.set(y,[...(horizontal.get(y)||[]),[start,x]]);start=-1;}}}
+     for(let x=0;x<w;x++){let start=-1;for(let y=0;y<=h;y++){const dark=y<h&&lum((y*w+x)*4)<145;if(dark&&start<0)start=y;if((!dark||y===h)&&start>=0){if(y-start>=minV)vertical.set(x,[...(vertical.get(x)||[]),[start,y]]);start=-1;}}}
+     let masked=0,skipped=0;
+     for(const b of boxes){
+      // Estimate the local paper/background colour from a narrow ring around the word.
+      const samples=[];const addSample=(x,y)=>{if(x<0||y<0||x>=w||y>=h)return;const i=(y*w+x)*4;if(lum(i)>172)samples.push([src[i],src[i+1],src[i+2]]);};
+      for(let x=b.x0;x<b.x1;x+=Math.max(1,Math.floor((b.x1-b.x0)/18))){addSample(x,b.y0-2);addSample(x,b.y1+1);}
+      for(let y=b.y0;y<b.y1;y+=Math.max(1,Math.floor((b.y1-b.y0)/10))){addSample(b.x0-2,y);addSample(b.x1+1,y);}
+      if(samples.length<3){skipped++;continue;}
+      const avg=[0,1,2].map(k=>samples.reduce((a,v)=>a+v[k],0)/samples.length);
+      const spread=samples.reduce((a,v)=>a+Math.abs(v[0]-avg[0])+Math.abs(v[1]-avg[1])+Math.abs(v[2]-avg[2]),0)/(samples.length*3);
+      // Do not erase text on photographs or textured illustrations; preserving the
+      // original artwork is safer than painting a false flat patch over it.
+      if(spread>31){skipped++;continue;}
+      for(let y=b.y0;y<b.y1;y++)for(let x=b.x0;x<b.x1;x++){const i=(y*w+x)*4;dst[i]=avg[0];dst[i+1]=avg[1];dst[i+2]=avg[2];dst[i+3]=255;}
+      masked++;
      }
-     if(!candidateCount)return;
-     // Preserve long horizontal and vertical strokes (table borders, ruled lines,
-     // underlines and separators). Preserve only their continuous run, not the
-     // whole row/column, so ordinary letters on the same baseline can be removed.
-     const markRuns=(horizontal)=>{
-      const outer=horizontal?height:width,inner=horizontal?width:height;
-      const minRun=Math.max(horizontal?13:11,Math.round(inner*(horizontal?.12:.30)));
-      for(let a=0;a<outer;a++){
-       let start=-1;
-       for(let b=0;b<=inner;b++){
-        const idx=horizontal?a*width+b:b*width+a,hit=b<inner&&candidate[idx];
-        if(hit&&start<0)start=b;
-        if((!hit||b===inner)&&start>=0){const end=b-1;if(end-start+1>=minRun){for(let q=start;q<=end;q++){const id=horizontal?a*width+q:q*width+a;preserve[id]=1;}}start=-1;}
-       }
-      }
-     };
-     markRuns(true);markRuns(false);
-     const original=new Uint8ClampedArray(data),dirs=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]];
-     for(let y=0;y<height;y++)for(let x=0;x<width;x++){
-      const i=y*width+x;if(!candidate[i]||preserve[i])continue;
-      let rr=0,gg=0,bb=0,n=0;
-      // Sample nearby untouched background pixels, avoiding both text and preserved rules.
-      for(let radius=1;radius<=7&&n<4;radius++)for(const [dx,dy] of dirs){
-       const xx=x+dx*radius,yy=y+dy*radius;if(xx<0||yy<0||xx>=width||yy>=height)continue;
-       const j=yy*width+xx;if(candidate[j]||preserve[j])continue;const q=j*4;
-       rr+=original[q];gg+=original[q+1];bb+=original[q+2];n++;if(n>=4)break;
-      }
-      const k=i*4;if(n){data[k]=Math.round(rr/n);data[k+1]=Math.round(gg/n);data[k+2]=Math.round(bb/n);}else{data[k]=bg[0];data[k+1]=bg[1];data[k+2]=bg[2];}
+     // Restore long table borders/rules that pass through a masked text box.
+     for(const b of boxes){
+      for(const [y,runs] of horizontal){if(y<b.y0||y>=b.y1)continue;for(const [a,z] of runs){const left=Math.max(a,b.x0),right=Math.min(z,b.x1);for(let x=left;x<right;x++){const i=(y*w+x)*4;dst[i]=src[i];dst[i+1]=src[i+1];dst[i+2]=src[i+2];dst[i+3]=src[i+3];}}}
+      for(const [x,runs] of vertical){if(x<b.x0||x>=b.x1)continue;for(const [a,z] of runs){const top=Math.max(a,b.y0),bottom=Math.min(z,b.y1);for(let y=top;y<bottom;y++){const i=(y*w+x)*4;dst[i]=src[i];dst[i+1]=src[i+1];dst[i+2]=src[i+2];dst[i+3]=src[i+3];}}}
      }
-     ctx.putImageData(image,x0,y0);
+     snap.data.set(dst);c.putImageData(snap,0,0);return {masked,skipped};
     };
+    // Do not paint over text pixels or guess the page background color.
+    // The page artwork is rendered with PDF.js text-showing operators filtered out,
+    // so vector rules, borders, images and shapes are left untouched.
     try{
      for(let pageNo=1;pageNo<=pdf.numPages;pageNo++){
       if(btn)btn.innerHTML=`<span class="spinner"></span> Preparing editable page ${pageNo}/${pdf.numPages}`;
       const page=await pdf.getPage(pageNo),baseVp=page.getViewport({scale:1});
       const content=await page.getTextContent({includeMarkedContent:false,disableNormalization:false});
-      const native=[];let legacyHint=false,privateChars=false;
+      const native=[];let legacyHint=false,privateChars=false,nativeSinhala=false;
       const styleEntries=Object.entries(content.styles||{});
       const styleNames=styleEntries.map(([key,st])=>String(st.fontFamily||st.fontName||key||'')).join(' ');
-      legacyHint=/(?:\bfm[\w -]{1,24}|\bdl[\w -]{1,24}|kaputa|malithi|wijesekera|iskoola|sarasavi)/i.test(styleNames);
+      legacyHint=/(?:\bfm[\w -]{1,24}|\bdl[\w -]{1,24}|kaputa|malithi|wijesekera|sarasavi)/i.test(styleNames);
       // Build editable frames by visual text line rather than by individual PDF glyph runs.
       // Keeping a whole Sinhala line together preserves combining marks and conjuncts better.
       const rawItems=[];
       for(const it of content.items||[]){
        if(typeof it.str!=='string'||!it.str.trim()||!it.transform)continue;
+       if(/[\u0D80-\u0DFF]/.test(it.str))nativeSinhala=true;
        if(/[\uE000-\uF8FF\uFFFD]/.test(it.str))privateChars=true;
        const m=pdfjsLib.Util.transform(baseVp.transform,it.transform);
        const angle=Math.atan2(m[1],m[0])*180/Math.PI;
@@ -330,17 +318,37 @@ async function processFileTool(id){
        }
        flush();
       }
-      const useOCR=mode==='ocr'||native.length===0||privateChars||legacyHint;
+      const scannedImagePage=native.length===0;
+      // Automatically OCR image-only pages inside editable-layout mode instead of
+      // stopping with an error. The OCR words become Word text frames; their source
+      // pixels are conservatively cleaned from the page image to prevent duplicates.
+      const useOCR=mode==='ocr'||scannedImagePage||(privateChars&&!nativeSinhala)||(legacyHint&&!nativeSinhala);
       const renderScale=Math.min(2.35,Math.sqrt(10500000/(baseVp.width*baseVp.height)));
       const renderVp=page.getViewport({scale:renderScale});
       const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d',{alpha:false});
       canvas.width=Math.ceil(renderVp.width);canvas.height=Math.ceil(renderVp.height);
       ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);
-      await page.render({canvasContext:ctx,viewport:renderVp}).promise;
+      const OPS=pdfjsLib.OPS||{};
+      const textOps=new Set([OPS.showText,OPS.showSpacedText,OPS.nextLineShowText,OPS.nextLineSetSpacingShowText].filter(Number.isInteger));
+      if(!textOps.size)throw Error('This PDF.js build does not expose the text-rendering operators needed for safe editable-layout conversion.');
+      // PDF.js 6.4.299 passes the exact optimized operator list into this callback.
+      // Filter only text-paint operations; keep images, table borders, rules and shapes.
+      await page.render({canvasContext:ctx,viewport:renderVp,operationsFilter:(index,renderList)=>!textOps.has(renderList.fnArray[index])}).promise;
       let frames=native;
       if(useOCR){
        if(btn)btn.innerHTML=`<span class="spinner"></span> Recognizing Sinhala and English · page ${pageNo}/${pdf.numPages}`;
-       const worker=await ensureOCR(),recognized=await worker.recognize(canvas),ocrData=recognized?.data||{};
+       // OCR must see the original text. The filtered canvas below is only the clean
+       // artwork background; recognize on a second, unfiltered rendering.
+       const ocrCanvas=document.createElement('canvas'),ocrCtx=ocrCanvas.getContext('2d',{alpha:false});
+       ocrCanvas.width=canvas.width;ocrCanvas.height=canvas.height;
+       ocrCtx.fillStyle='#ffffff';ocrCtx.fillRect(0,0,ocrCanvas.width,ocrCanvas.height);
+       await page.render({canvasContext:ocrCtx,viewport:renderVp}).promise;
+       const worker=await ensureOCR(),recognized=await worker.recognize(ocrCanvas),ocrData=recognized?.data||{};
+       ocrCanvas.width=1;ocrCanvas.height=1;
+       let scanCleanup={masked:0,skipped:0};
+       if(scannedImagePage){
+        scanCleanup=maskScannedTextFromCanvas(canvas,ocrData,renderScale);totalScannedMasks+=scanCleanup.masked;totalSkippedMasks+=scanCleanup.skipped;
+       }
        const ocrFrames=[];
        // Tesseract line text keeps Sinhala grapheme clusters and spaces together.
        const ocrLines=Array.isArray(ocrData.lines)?ocrData.lines:[];
@@ -361,31 +369,33 @@ async function processFileTool(id){
          addFrame(ocrFrames,text,x/renderScale,y/renderScale,(right-x)/renderScale+Math.max(4,h*.45),h*1.85,h*.98,'ocr-line');
         }
        }
-       if(ocrFrames.length){frames=ocrFrames;totalOCR+=ocrFrames.length;}else if(native.length){frames=native;}
+       if(ocrFrames.length){frames=ocrFrames;totalOCR+=ocrFrames.length;}else{throw Error(`Sinhala/English OCR did not recognize readable text on page ${pageNo}. No incomplete Word file was created. Try the Editable flowing text mode or a clearer PDF.`);}
       }
       if(!frames.length)throw Error(`No editable text could be recognized on page ${pageNo}. This page may contain only drawings or very low-quality scans.`);
-      // Mask the original text while retaining logos, photos, lines, tables and other page artwork.
-      const maskFrames=useOCR?[...native,...frames]:frames;
-      // Deduplicate overlapping text masks to avoid over-cleaning the same line twice.
-      const maskSeen=new Set();
-      for(const f of maskFrames){
-       const key=[Math.round(f.x),Math.round(f.y),Math.round(f.w),Math.round(f.h),f.text].join('|');
-       if(maskSeen.has(key))continue;maskSeen.add(key);
-       eraseGlyphPixels(ctx,f,renderScale);
-      }
+      // Original text paint operators were filtered before rendering; no pixel erasure is used.
       const pageBlob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Could not prepare the page background image.')),'image/jpeg',.94));
       const imageData=new Uint8Array(await pageBlob.arrayBuffer());
       const pageWidthTwips=Math.round(baseVp.width*20),pageHeightTwips=Math.round(baseVp.height*20);
       const imageWidth=baseVp.width*96/72,imageHeight=baseVp.height*96/72;
       const bgRun=new docx.ImageRun({data:imageData,transformation:{width:imageWidth,height:imageHeight},floating:{horizontalPosition:{relative:docx.HorizontalPositionRelativeFrom.PAGE,offset:0},verticalPosition:{relative:docx.VerticalPositionRelativeFrom.PAGE,offset:0},wrap:{type:docx.TextWrappingType.NONE},behindDocument:true,allowOverlap:true,lockAnchor:true,zIndex:0}});
       const children=[new docx.Paragraph({children:[bgRun],spacing:{before:0,after:0}})];frameSpecs.push(null);
+      const measureCanvas=document.createElement('canvas'),measureCtx=measureCanvas.getContext('2d');
+      try{await document.fonts?.load?.(`16px \"${chosenFont}\"`);}catch{}
       for(const f of frames){
-       const widthTwips=clamp(Math.round((f.w+Math.max(1.5,f.fontSize*.18))*20),160,31680);
-       // Sinhala vowel signs and consonant clusters can extend above/below the base glyph.
-       // Give the Word frame and paragraph enough vertical room to avoid half-clipped letters.
-       const safeHeight=Math.max(f.h*1.18,f.fontSize*2.25);
-       const heightTwips=clamp(Math.round(safeHeight*20),240,31680);
-       const xTwips=clamp(Math.round(f.x*20),0,31680),yTwips=clamp(Math.round(f.y-Math.max(0,(safeHeight-f.h)*.10)*20/20),0,31680);
+       // Measure the editable line in the exact output font. This avoids narrow Word
+       // frames wrapping Sinhala clusters and clipping vowel signs after substitution.
+       const fontPx=Math.max(7,f.fontSize*96/72);
+       measureCtx.font=`${fontPx}px \"${chosenFont}\"`;
+       const measuredPt=(measureCtx.measureText(f.text).width||0)*72/96;
+       const availablePt=Math.max(8,baseVp.width-f.x-2);
+       const widthPt=Math.min(availablePt,Math.max(f.w+Math.max(3,f.fontSize*.45),measuredPt+Math.max(4,f.fontSize*.85)));
+       const widthTwips=clamp(Math.round(widthPt*20),160,31680);
+       const metrics=measureCtx.measureText(f.text);
+       const glyphHeightPt=((metrics.actualBoundingBoxAscent||fontPx*.82)+(metrics.actualBoundingBoxDescent||fontPx*.28))*72/96;
+       // Use an at-least height in Word, with extra room for Sinhala combining marks.
+       const safeHeight=Math.max(f.h*1.45,f.fontSize*2.15,glyphHeightPt*1.35);
+       const heightTwips=clamp(Math.round(safeHeight*20),300,31680);
+       const xTwips=clamp(Math.round(f.x*20),0,31680),yTwips=clamp(Math.round((f.y-Math.max(0,(safeHeight-f.h)*.14))*20),0,31680);
        const size=Math.round(f.fontSize*2);
        children.push(new docx.Paragraph({children:[new docx.TextRun({text:f.text,font:chosenFont,size,color:'17243A'})],spacing:{before:0,after:0,line:276,lineRule:'atLeast'},indent:{left:0,right:0,firstLine:0}}));
        frameSpecs.push({x:xTwips,y:yTwips,w:widthTwips,h:heightTwips});totalEditable++;
@@ -399,7 +409,8 @@ async function processFileTool(id){
     editableBlob=await addWordTextFramePositions(editableBlob,frameSpecs);
     editableBlob=await applyWordFontForAllScripts(editableBlob,chosenFont);
     downloadBlob(editableBlob,baseName(first.name)+'-editable-layout.docx');
-    ok('Editable-layout Word document created.','Text lines are placed in editable Word frames over a background that retains the PDF page artwork. You can edit words inside each line, delete or restyle text. Sinhala OCR is line-grouped to better preserve joined characters. Background artwork remains embedded as page imagery; review the result and make small adjustments where needed.',`${pdf.numPages} page(s) · ${totalEditable} editable text frames · ${totalOCR} OCR text lines · positioned editable Word text`);return;
+    const scannedPagesNote=totalOCR?` OCR was used on ${totalOCR} recognized line(s). On image-only scans, recognized word areas are cleaned from the page image where the background is plain; text over photos or textured artwork may remain visible and need review.`:'';
+    ok('Editable-layout Word document created.','Text is placed in editable Word frames over the original page artwork. Text-based PDFs keep their vector rules and images; scanned pages use Sinhala + English OCR and conservative cleanup of detected word areas. You can edit, delete or restyle the recognized text. Check scanned pages carefully because OCR and image cleanup cannot guarantee exact reconstruction.',`${pdf.numPages} page(s) · ${totalEditable} editable text frames · ${totalOCR} OCR text lines · ${totalScannedMasks} scan text areas cleaned · ${totalSkippedMasks} textured areas left unchanged · positioned editable Word text.${scannedPagesNote}`);return;
    }
    if(layoutMode==='visual'){
     // Layout-preserving mode: render each PDF page and place it as a full-page image in DOCX.
@@ -533,10 +544,10 @@ async function processFileTool(id){
    const font=await doc.embedFont(StandardFonts.Helvetica),pos=document.getElementById('optPosition').value;pages.forEach((p,i)=>{const {width,height}=p.getSize(),x=pos==='bottom-right'?width-55:pos==='top-right'?width-55:width/2,y=pos==='top-right'?height-25:20;p.drawText(String(i+1),{x,y,size:10,font,color:rgb(.2,.3,.5)});});const result=await doc.save();downloadBlob(new Blob([result],{type:'application/pdf'}),'numbered.pdf');ok('Page numbers added.','Your numbered PDF has been downloaded.',`${pages.length} pages`);return;
   }
   if(id==='pdf-to-jpg'){
-   if(!window.pdfjsLib||!window.JSZip)throw Error('The PDF image libraries did not load. Reload and try again.');pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const pdf=await pdfjsLib.getDocument({data:new Uint8Array(bytes)}).promise,zip=new JSZip(),scale=Number(document.getElementById('optQuality').value);for(let n=1;n<=pdf.numPages;n++){const page=await pdf.getPage(n),vp=page.getViewport({scale}),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');canvas.width=vp.width;canvas.height=vp.height;await page.render({canvasContext:ctx,viewport:vp}).promise;const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.94));zip.file(`page-${String(n).padStart(3,'0')}.jpg`,blob);}const out=await zip.generateAsync({type:'blob'});downloadBlob(out,'pdf-pages-jpg.zip');ok('PDF pages converted to JPG.','All page images are packaged in a ZIP file.',`${pdf.numPages} JPG images`);return;
+   if(!window.pdfjsLib||!window.JSZip)throw Error('The PDF image libraries did not load. Reload and try again.');const pdf=await pdfjsLib.getDocument({data:new Uint8Array(bytes)}).promise,zip=new JSZip(),scale=Number(document.getElementById('optQuality').value);for(let n=1;n<=pdf.numPages;n++){const page=await pdf.getPage(n),vp=page.getViewport({scale}),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');canvas.width=vp.width;canvas.height=vp.height;await page.render({canvasContext:ctx,viewport:vp}).promise;const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.94));zip.file(`page-${String(n).padStart(3,'0')}.jpg`,blob);}const out=await zip.generateAsync({type:'blob'});downloadBlob(out,'pdf-pages-jpg.zip');ok('PDF pages converted to JPG.','All page images are packaged in a ZIP file.',`${pdf.numPages} JPG images`);return;
   }
   if(id==='compress-pdf'){
-   if(!window.pdfjsLib)throw Error('The PDF renderer did not load. Reload and try again.');pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const pdf=await pdfjsLib.getDocument({data:new Uint8Array(bytes)}).promise,out=await PDFDocument.create(),q=Number(document.getElementById('optQuality').value);for(let n=1;n<=pdf.numPages;n++){const page=await pdf.getPage(n),vp=page.getViewport({scale:1.35}),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');canvas.width=vp.width;canvas.height=vp.height;await page.render({canvasContext:ctx,viewport:vp}).promise;const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',q));const arr=new Uint8Array(await blob.arrayBuffer()),im=await out.embedJpg(arr),p=out.addPage([vp.width,vp.height]);p.drawImage(im,{x:0,y:0,width:vp.width,height:vp.height});}const result=await out.save();downloadBlob(new Blob([result],{type:'application/pdf'}),'compressed.pdf');ok('Compressed PDF created.','Your smaller image-based PDF has been downloaded.','Note: text selection and search are not retained in this compression mode.');return;
+   if(!window.pdfjsLib)throw Error('The PDF renderer did not load. Reload and try again.');const pdf=await pdfjsLib.getDocument({data:new Uint8Array(bytes)}).promise,out=await PDFDocument.create(),q=Number(document.getElementById('optQuality').value);for(let n=1;n<=pdf.numPages;n++){const page=await pdf.getPage(n),vp=page.getViewport({scale:1.35}),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');canvas.width=vp.width;canvas.height=vp.height;await page.render({canvasContext:ctx,viewport:vp}).promise;const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',q));const arr=new Uint8Array(await blob.arrayBuffer()),im=await out.embedJpg(arr),p=out.addPage([vp.width,vp.height]);p.drawImage(im,{x:0,y:0,width:vp.width,height:vp.height});}const result=await out.save();downloadBlob(new Blob([result],{type:'application/pdf'}),'compressed.pdf');ok('Compressed PDF created.','Your smaller image-based PDF has been downloaded.','Note: text selection and search are not retained in this compression mode.');return;
   }
   throw Error('This PDF operation is not supported yet.');
  }catch(e){console.error(e);const msg=e?.message||'Unable to process this file.';showResult(`<div class="error-result"><b>We could not complete this conversion</b><p>${escapeHtml(msg)}</p><small>Your original file has not been changed.</small></div>`);}
@@ -549,7 +560,7 @@ async function processFileTool(id){
  const esc=n=>String(Math.max(0,Math.round(n)));
  xml=xml.replace(/<w:p(?:\s[^>]*)?>[\s\S]*?<\/w:p>/g,p=>{
   const spec=frameSpecs[index++];if(!spec)return p;
-  const pr=`<w:framePr w:w="${esc(spec.w)}" w:h="${esc(spec.h)}" w:hRule="exact" w:wrap="none" w:hAnchor="page" w:vAnchor="page" w:x="${esc(spec.x)}" w:y="${esc(spec.y)}" w:hSpace="0" w:vSpace="0"/>`;
+  const pr=`<w:framePr w:w="${esc(spec.w)}" w:h="${esc(spec.h)}" w:hRule="atLeast" w:wrap="none" w:hAnchor="page" w:vAnchor="page" w:x="${esc(spec.x)}" w:y="${esc(spec.y)}" w:hSpace="0" w:vSpace="0"/>`;
   if(/<w:pPr(?:\s[^>]*)?>/.test(p)){
    // framePr belongs before spacing/indent/alignment properties in pPr.
    return p.replace(/(<w:pPr(?:\s[^>]*)?>)/,`$1${pr}`);
