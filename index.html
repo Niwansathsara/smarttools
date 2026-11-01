@@ -112,7 +112,7 @@ function fileWorkspace(t){
  if(t.id==='add-page-numbers')options=`<div class="field"><label for="optPosition">Number position</label><select id="optPosition"><option value="bottom-center">Bottom center</option><option value="bottom-right">Bottom right</option><option value="top-right">Top right</option></select></div>`;
  if(t.id==='compress-pdf')options=`<div class="field"><label for="optQuality">Image quality</label><select id="optQuality"><option value="0.72">Balanced</option><option value="0.55">Smaller file</option><option value="0.88">Higher quality</option></select></div><div class="notice">This image-based compression can reduce file size, but selectable/searchable text is not retained in the output.</div>`;
  if(t.id==='pdf-to-jpg')options=`<div class="field"><label for="optQuality">Image resolution</label><select id="optQuality"><option value="1.5">Standard</option><option value="2">High</option><option value="2.5">Very high</option></select></div>`;
- if(t.id==='pdf-to-word')options=`<div class="field"><label for="pdfWordLayout">Word conversion mode</label><select id="pdfWordLayout" onchange="document.getElementById('pdfEditableSettings').style.display=this.value==='visual'?'none':'block'"><option value="editable-layout" selected>Keep page layout + editable words (recommended)</option><option value="editable">Editable flowing text (simple document)</option></select></div><div class="notice sinhala-notice"><b>Editable layout mode:</b> SmartTools keeps page images, diagrams, rules and non-text artwork in the page background, then places each recognized text line in a separate editable Word text frame at its original position. Words can be selected, rewritten, deleted and restyled. Sinhala OCR is grouped by full text lines to better preserve vowel signs and joined characters. Complex pages may still need small adjustments.<hr style="border:0;border-top:1px solid #dce6f7;margin:10px 0"><span lang="si"><b>මෙම ක්‍රමයේදී</b> PDF එකේ පින්තූර, වගු රේඛා සහ වෙනත් රූප පසුබිමේ තබා, අකුරු පේළි ලෙස වෙන වෙනම Edit කළ හැකි Word Text Frames බවට පත් කරනවා. වචන Select කරලා වෙනස් කිරීම, මකා දැමීම සහ Font වෙනස් කිරීම කළ හැකියි. Sinhala OCR ප්‍රතිඵල පරීක්ෂා කරන්න; සංකීර්ණ පිටු සඳහා සුළු සකස් කිරීම් අවශ්‍ය විය හැකියි.</span></div><div id="pdfEditableSettings"><div class="field"><label for="pdfWordFont">Font for editable text</label><select id="pdfWordFont"><option value="Noto Sans Sinhala" selected>Noto Sans Sinhala (recommended)</option><option value="Abhaya Libre">Abhaya Libre</option><option value="Iskoola Pota">Iskoola Pota (if installed)</option><option value="Arial">Arial</option></select></div><div class="field"><label for="pdfWordMode">Sinhala / scanned PDF text recognition</label><select id="pdfWordMode"><option value="auto" selected>Automatic — use PDF text; OCR scanned / legacy Sinhala</option><option value="ocr">Force Sinhala + English OCR</option></select></div><div class="notice">For best editable results, use a selectable-text Unicode PDF. OCR converts scanned pages into editable text, but complex Sinhala conjuncts, punctuation and low-resolution scans may need proofreading.</div></div>`;
+ if(t.id==='pdf-to-word')options=`<div class="field"><label for="pdfWordLayout">Word conversion mode</label><select id="pdfWordLayout" onchange="document.getElementById('pdfEditableSettings').style.display=this.value==='visual'?'none':'block'"><option value="editable-layout" selected>Keep page layout + editable words (recommended)</option><option value="editable">Editable flowing text (simple document)</option></select></div><div class="notice sinhala-notice"><b>Editable layout mode:</b> SmartTools keeps page images, diagrams, rules and non-text artwork in the page background, then places each recognized text line in a separate editable Word text frame at its original position. Words can be selected, rewritten, deleted and restyled. Sinhala OCR is grouped by full text lines to better preserve vowel signs and joined characters. Page artwork, pictures and detected rules are retained in the background. Complex pages may still need small adjustments.<hr style="border:0;border-top:1px solid #dce6f7;margin:10px 0"><span lang="si"><b>මෙම ක්‍රමයේදී</b> PDF එකේ පින්තූර, වගු රේඛා සහ වෙනත් රූප පසුබිමේ තබා, අකුරු පේළි ලෙස වෙන වෙනම Edit කළ හැකි Word Text Frames බවට පත් කරනවා. වචන Select කරලා වෙනස් කිරීම, මකා දැමීම සහ Font වෙනස් කිරීම කළ හැකියි. Sinhala OCR ප්‍රතිඵල පරීක්ෂා කරන්න; සංකීර්ණ පිටු සඳහා සුළු සකස් කිරීම් අවශ්‍ය විය හැකියි.</span></div><div id="pdfEditableSettings"><div class="field"><label for="pdfWordFont">Font for editable text</label><select id="pdfWordFont"><option value="Noto Sans Sinhala" selected>Noto Sans Sinhala (recommended)</option><option value="Abhaya Libre">Abhaya Libre</option><option value="Iskoola Pota">Iskoola Pota (if installed)</option><option value="Arial">Arial</option></select></div><div class="field"><label for="pdfWordMode">Sinhala / scanned PDF text recognition</label><select id="pdfWordMode"><option value="auto" selected>Automatic — use PDF text; OCR scanned / legacy Sinhala</option><option value="ocr">Force Sinhala + English OCR</option></select></div><div class="notice">For best editable results, use a selectable-text Unicode PDF. OCR converts scanned pages into editable text, but complex Sinhala conjuncts, punctuation and low-resolution scans may need proofreading.</div></div>`;
  if(t.id==='word-to-pdf')options=`<div class="notice sinhala-notice"><b>Sinhala support:</b> Sinhala DOCX text is rendered with Noto Sans Sinhala where available. For best results, use Unicode Sinhala text and keep a copy of your original document.</div>`;
  const helper=t.id==='pdf-to-word'?'Keep the original PDF page layout in Word, or choose editable text when you need to change individual words.':t.id==='word-to-pdf'?'Convert a modern .docx Word document into a downloadable PDF.':'Your files are processed in this browser where supported.';
  return `<h3>${t.name}</h3><p class="workspace-intro">${helper}</p><div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="dropFiles(event)"><div class="uploadico">☁️</div><b>Choose ${multiple?'files':'a file'} or drag ${multiple?'them':'it'} here</b><span>${t.id==='word-to-pdf'?'DOCX Word documents':(['jpg-to-pdf','png-to-pdf'].includes(t.id)?'JPG or PNG images':'PDF documents')} · Local browser processing</span></div><input class="fileinput" id="fileInput" type="file" accept="${accept}" ${multiple?'multiple':''} onchange="setFiles(this.files)"><div id="fileList" class="file-list">No files selected</div>${options}<div class="workactions"><button class="primary" id="processFileButton" onclick="processFileTool('${t.id}')">${t.id==='word-to-pdf'||t.id==='pdf-to-word'?'Convert document':'Process files'} <span>→</span></button><button class="ghost" onclick="clearFiles()">Clear</button></div><div id="resultbox" class="resultbox"><h4>✓ Your result is ready</h4><div id="resultContent"></div></div>`;
@@ -216,12 +216,61 @@ async function processFileTool(id){
      if(!text||!Number.isFinite(x)||!Number.isFinite(y)||!Number.isFinite(w)||!Number.isFinite(h))return;
      arr.push({text,x:Math.max(0,x),y:Math.max(0,y),w:Math.max(8,w),h:Math.max(7,h),fontSize:clamp(fontSize||11,5,60),source});
     };
-    const sampleBg=(ctx,x,y,w,h)=>{
-     const c=ctx.canvas,pts=[[x-2,y-2],[x+w+2,y-2],[x-2,y+h+2],[x+w+2,y+h+2],[x+w/2,y-2],[x+w/2,y+h+2]];
-     const vals=[];for(const [px,py] of pts){const ix=clamp(Math.round(px),0,c.width-1),iy=clamp(Math.round(py),0,c.height-1);try{const d=ctx.getImageData(ix,iy,1,1).data;vals.push([d[0],d[1],d[2]]);}catch{}}
-     if(!vals.length)return '#ffffff';
-     const med=k=>{const a=vals.map(v=>v[k]).sort((a,b)=>a-b);return a[Math.floor(a.length/2)];};
-     return `rgb(${med(0)},${med(1)},${med(2)})`;
+    // Remove only text-like pixels from the page artwork. The previous version
+    // painted a solid rectangle over every line; that erased table rules, borders
+    // and underlines. This mask keeps long straight rules and reconstructs only
+    // the small glyph pixels around editable text.
+    const eraseGlyphPixels=(ctx,frame,scale)=>{
+     const canvas=ctx.canvas,pad=Math.max(2,Math.round((frame.fontSize||10)*scale*.16));
+     const x0=clamp(Math.floor(frame.x*scale)-pad,0,canvas.width-1),y0=clamp(Math.floor(frame.y*scale)-pad,0,canvas.height-1);
+     const x1=clamp(Math.ceil((frame.x+frame.w)*scale)+pad,x0+1,canvas.width),y1=clamp(Math.ceil((frame.y+frame.h)*scale)+pad,y0+1,canvas.height);
+     const width=x1-x0,height=y1-y0;if(width<2||height<2)return;
+     let image;try{image=ctx.getImageData(x0,y0,width,height)}catch{return;}
+     const data=image.data,total=width*height,lum=new Float32Array(total),candidate=new Uint8Array(total),preserve=new Uint8Array(total);
+     const border=[[],[],[]];
+     const pushBorder=i=>{const k=i*4;border[0].push(data[k]);border[1].push(data[k+1]);border[2].push(data[k+2]);};
+     for(let x=0;x<width;x++){pushBorder(x);pushBorder((height-1)*width+x);}
+     for(let y=1;y<height-1;y++){pushBorder(y*width);pushBorder(y*width+width-1);}
+     const median=a=>{a.sort((u,v)=>u-v);return a[Math.floor(a.length/2)]||255;};
+     const bg=[median(border[0]),median(border[1]),median(border[2])],bgLum=.2126*bg[0]+.7152*bg[1]+.0722*bg[2];
+     let candidateCount=0;
+     for(let i=0;i<total;i++){
+      const k=i*4,r=data[k],g=data[k+1],b=data[k+2],l=.2126*r+.7152*g+.0722*b;lum[i]=l;
+      const dist=Math.hypot(r-bg[0],g-bg[1],b-bg[2]);
+      // Limit to pixels that contrast strongly with their immediate local background.
+      // This also catches light text on a dark panel, not only black text on white.
+      if(dist>54&&Math.abs(l-bgLum)>34){candidate[i]=1;candidateCount++;}
+     }
+     if(!candidateCount)return;
+     // Preserve long horizontal and vertical strokes (table borders, ruled lines,
+     // underlines and separators). Preserve only their continuous run, not the
+     // whole row/column, so ordinary letters on the same baseline can be removed.
+     const markRuns=(horizontal)=>{
+      const outer=horizontal?height:width,inner=horizontal?width:height;
+      const minRun=Math.max(horizontal?13:11,Math.round(inner*(horizontal?.12:.30)));
+      for(let a=0;a<outer;a++){
+       let start=-1;
+       for(let b=0;b<=inner;b++){
+        const idx=horizontal?a*width+b:b*width+a,hit=b<inner&&candidate[idx];
+        if(hit&&start<0)start=b;
+        if((!hit||b===inner)&&start>=0){const end=b-1;if(end-start+1>=minRun){for(let q=start;q<=end;q++){const id=horizontal?a*width+q:q*width+a;preserve[id]=1;}}start=-1;}
+       }
+      }
+     };
+     markRuns(true);markRuns(false);
+     const original=new Uint8ClampedArray(data),dirs=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]];
+     for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+      const i=y*width+x;if(!candidate[i]||preserve[i])continue;
+      let rr=0,gg=0,bb=0,n=0;
+      // Sample nearby untouched background pixels, avoiding both text and preserved rules.
+      for(let radius=1;radius<=7&&n<4;radius++)for(const [dx,dy] of dirs){
+       const xx=x+dx*radius,yy=y+dy*radius;if(xx<0||yy<0||xx>=width||yy>=height)continue;
+       const j=yy*width+xx;if(candidate[j]||preserve[j])continue;const q=j*4;
+       rr+=original[q];gg+=original[q+1];bb+=original[q+2];n++;if(n>=4)break;
+      }
+      const k=i*4;if(n){data[k]=Math.round(rr/n);data[k+1]=Math.round(gg/n);data[k+2]=Math.round(bb/n);}else{data[k]=bg[0];data[k+1]=bg[1];data[k+2]=bg[2];}
+     }
+     ctx.putImageData(image,x0,y0);
     };
     try{
      for(let pageNo=1;pageNo<=pdf.numPages;pageNo++){
@@ -317,11 +366,12 @@ async function processFileTool(id){
       if(!frames.length)throw Error(`No editable text could be recognized on page ${pageNo}. This page may contain only drawings or very low-quality scans.`);
       // Mask the original text while retaining logos, photos, lines, tables and other page artwork.
       const maskFrames=useOCR?[...native,...frames]:frames;
+      // Deduplicate overlapping text masks to avoid over-cleaning the same line twice.
+      const maskSeen=new Set();
       for(const f of maskFrames){
-       const x=f.x*renderScale,y=f.y*renderScale,w=f.w*renderScale,h=f.h*renderScale;
-       const px=Math.max(0,x-1.2),py=Math.max(0,y-1.0),pw=Math.min(canvas.width-px,w+2.4),ph=Math.min(canvas.height-py,h+2.0);
-       if(pw<=0||ph<=0)continue;
-       ctx.fillStyle=sampleBg(ctx,px,py,pw,ph);ctx.fillRect(px,py,pw,ph);
+       const key=[Math.round(f.x),Math.round(f.y),Math.round(f.w),Math.round(f.h),f.text].join('|');
+       if(maskSeen.has(key))continue;maskSeen.add(key);
+       eraseGlyphPixels(ctx,f,renderScale);
       }
       const pageBlob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Could not prepare the page background image.')),'image/jpeg',.94));
       const imageData=new Uint8Array(await pageBlob.arrayBuffer());
@@ -330,10 +380,14 @@ async function processFileTool(id){
       const bgRun=new docx.ImageRun({data:imageData,transformation:{width:imageWidth,height:imageHeight},floating:{horizontalPosition:{relative:docx.HorizontalPositionRelativeFrom.PAGE,offset:0},verticalPosition:{relative:docx.VerticalPositionRelativeFrom.PAGE,offset:0},wrap:{type:docx.TextWrappingType.NONE},behindDocument:true,allowOverlap:true,lockAnchor:true,zIndex:0}});
       const children=[new docx.Paragraph({children:[bgRun],spacing:{before:0,after:0}})];frameSpecs.push(null);
       for(const f of frames){
-       const widthTwips=clamp(Math.round(f.w*20),160,31680),heightTwips=clamp(Math.round(f.h*20),180,31680);
-       const xTwips=clamp(Math.round(f.x*20),0,31680),yTwips=clamp(Math.round(f.y*20),0,31680);
+       const widthTwips=clamp(Math.round((f.w+Math.max(1.5,f.fontSize*.18))*20),160,31680);
+       // Sinhala vowel signs and consonant clusters can extend above/below the base glyph.
+       // Give the Word frame and paragraph enough vertical room to avoid half-clipped letters.
+       const safeHeight=Math.max(f.h*1.18,f.fontSize*2.25);
+       const heightTwips=clamp(Math.round(safeHeight*20),240,31680);
+       const xTwips=clamp(Math.round(f.x*20),0,31680),yTwips=clamp(Math.round(f.y-Math.max(0,(safeHeight-f.h)*.10)*20/20),0,31680);
        const size=Math.round(f.fontSize*2);
-       children.push(new docx.Paragraph({children:[new docx.TextRun({text:f.text,font:chosenFont,size,color:'17243A'})],spacing:{before:0,after:0,line:100}}));
+       children.push(new docx.Paragraph({children:[new docx.TextRun({text:f.text,font:chosenFont,size,color:'17243A'})],spacing:{before:0,after:0,line:276,lineRule:'atLeast'},indent:{left:0,right:0,firstLine:0}}));
        frameSpecs.push({x:xTwips,y:yTwips,w:widthTwips,h:heightTwips});totalEditable++;
       }
       sections.push({properties:{type:docx.SectionType.NEXT_PAGE,page:{size:{width:pageWidthTwips,height:pageHeightTwips},margin:{top:0,right:0,bottom:0,left:0}}},children});
