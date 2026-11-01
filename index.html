@@ -112,7 +112,7 @@ function fileWorkspace(t){
  if(t.id==='add-page-numbers')options=`<div class="field"><label for="optPosition">Number position</label><select id="optPosition"><option value="bottom-center">Bottom center</option><option value="bottom-right">Bottom right</option><option value="top-right">Top right</option></select></div>`;
  if(t.id==='compress-pdf')options=`<div class="field"><label for="optQuality">Image quality</label><select id="optQuality"><option value="0.72">Balanced</option><option value="0.55">Smaller file</option><option value="0.88">Higher quality</option></select></div><div class="notice">This image-based compression can reduce file size, but selectable/searchable text is not retained in the output.</div>`;
  if(t.id==='pdf-to-jpg')options=`<div class="field"><label for="optQuality">Image resolution</label><select id="optQuality"><option value="1.5">Standard</option><option value="2">High</option><option value="2.5">Very high</option></select></div>`;
- if(t.id==='pdf-to-word')options=`<div class="field"><label for="pdfWordLayout">Word document layout</label><select id="pdfWordLayout" onchange="document.getElementById('pdfEditableSettings').style.display=this.value==='editable'?'block':'none'"><option value="visual" selected>Keep the original PDF layout (recommended)</option><option value="editable">Editable Word text (layout can change)</option></select></div><div class="notice sinhala-notice"><b>Recommended for keeping the exact same positions:</b> SmartTools places each PDF page into Word as a high-resolution page image. Sinhala letters, words, tables, columns, spacing and page positions stay visually like the original PDF. <b>Note:</b> text in this mode is not directly editable because each page is an image. Choose “Editable Word text” below if you need to edit individual words.</div><div id="pdfEditableSettings" style="display:none"><div class="field"><label for="pdfWordFont">Sinhala / document font in editable Word</label><select id="pdfWordFont"><option value="Noto Sans Sinhala" selected>Noto Sans Sinhala (recommended)</option><option value="Iskoola Pota">Iskoola Pota (if installed)</option><option value="Abhaya Libre">Abhaya Libre (if installed)</option><option value="Arial">Arial</option></select></div><div class="field"><label for="pdfWordMode">How should the PDF text be read?</label><select id="pdfWordMode"><option value="auto" selected>Automatic — keep Unicode text; OCR scanned pages</option><option value="ocr">Sinhala + English OCR — best for scans / old FM-font PDFs</option></select></div><div class="notice sinhala-notice"><b>Sinhala guidance:</b> Editable text conversion may reflow the page because Word uses different fonts and line metrics. For scanned PDFs or old FM / legacy-font files, choose Sinhala + English OCR. OCR can recognize visible characters, but may need proofreading.<hr style="border:0;border-top:1px solid #dce6f7;margin:10px 0"><span lang="si">PDF එකේ තියෙන අකුරු, වචන සහ වගු තිබෙන තැන් ඒ ආකාරයෙන්ම රැකගන්න නම් ඉහළ ඇති “Keep the original PDF layout” ක්‍රමය භාවිතා කරන්න. Word තුළ අකුරු වෙන වෙනම edit කිරීමට අවශ්‍ය නම් පමණක් “Editable Word text” තෝරන්න. Editable ක්‍රමයේදී Word එකේ line spacing සහ අකුරු පිහිටීම වෙනස් විය හැකියි.</span></div></div>`;
+ if(t.id==='pdf-to-word')options=`<div class="field"><label for="pdfWordLayout">Word conversion mode</label><select id="pdfWordLayout" onchange="document.getElementById('pdfEditableSettings').style.display=this.value==='visual'?'none':'block'"><option value="editable-layout" selected>Editable text + original page layout (recommended)</option><option value="editable">Editable flowing text (simple document)</option><option value="visual">Exact visual copy (page images; not editable)</option></select></div><div class="notice sinhala-notice"><b>Editable layout mode:</b> SmartTools keeps the page artwork as a background and places extracted text in separate, editable Word text frames at their original page positions. You can select, rewrite, delete and change the font of the text. Complex PDFs may still need small adjustments because Word and PDF use different layout systems. Scanned or legacy-font Sinhala uses OCR and must be proofread.<hr style="border:0;border-top:1px solid #dce6f7;margin:10px 0"><span lang="si"><b>මෙම ක්‍රමයේදී</b> PDF පිටුවේ පින්තූර/රේඛා පසුබිමක් ලෙස තබා අකුරු වෙන වෙනම edit කළ හැකි Word text frames ලෙස මුල් ස්ථානවලට දමනවා. ඒ නිසා වචන වෙනස් කිරීම, මකා දැමීම සහ Font වෙනස් කිරීම කළ හැකියි. සියලුම PDF වල 100% එකම පිහිටීම සහතික කළ නොහැකියි. Scan කළ හෝ පැරණි Sinhala font PDF සඳහා OCR ප්‍රතිඵල පරීක්ෂා කරන්න.</span></div><div id="pdfEditableSettings"><div class="field"><label for="pdfWordFont">Font for editable text</label><select id="pdfWordFont"><option value="Noto Sans Sinhala" selected>Noto Sans Sinhala (recommended)</option><option value="Abhaya Libre">Abhaya Libre</option><option value="Iskoola Pota">Iskoola Pota (if installed)</option><option value="Arial">Arial</option></select></div><div class="field"><label for="pdfWordMode">Sinhala / scanned PDF text recognition</label><select id="pdfWordMode"><option value="auto" selected>Automatic — use PDF text; OCR scanned / legacy Sinhala</option><option value="ocr">Force Sinhala + English OCR</option></select></div><div class="notice">For best editable results, use a selectable-text Unicode PDF. OCR converts scanned pages into editable text, but complex Sinhala conjuncts, punctuation and low-resolution scans may need proofreading.</div></div>`;
  if(t.id==='word-to-pdf')options=`<div class="notice sinhala-notice"><b>Sinhala support:</b> Sinhala DOCX text is rendered with Noto Sans Sinhala where available. For best results, use Unicode Sinhala text and keep a copy of your original document.</div>`;
  const helper=t.id==='pdf-to-word'?'Keep the original PDF page layout in Word, or choose editable text when you need to change individual words.':t.id==='word-to-pdf'?'Convert a modern .docx Word document into a downloadable PDF.':'Your files are processed in this browser where supported.';
  return `<h3>${t.name}</h3><p class="workspace-intro">${helper}</p><div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="dropFiles(event)"><div class="uploadico">☁️</div><b>Choose ${multiple?'files':'a file'} or drag ${multiple?'them':'it'} here</b><span>${t.id==='word-to-pdf'?'DOCX Word documents':(['jpg-to-pdf','png-to-pdf'].includes(t.id)?'JPG or PNG images':'PDF documents')} · Local browser processing</span></div><input class="fileinput" id="fileInput" type="file" accept="${accept}" ${multiple?'multiple':''} onchange="setFiles(this.files)"><div id="fileList" class="file-list">No files selected</div>${options}<div class="workactions"><button class="primary" id="processFileButton" onclick="processFileTool('${t.id}')">${t.id==='word-to-pdf'||t.id==='pdf-to-word'?'Convert document':'Process files'} <span>→</span></button><button class="ghost" onclick="clearFiles()">Clear</button></div><div id="resultbox" class="resultbox"><h4>✓ Your result is ready</h4><div id="resultContent"></div></div>`;
@@ -194,7 +194,106 @@ async function processFileTool(id){
    if(!window.pdfjsLib||!window.docx||!window.JSZip)throw Error('The PDF-to-Word libraries did not load. Check your internet connection, reload, and try again.');
    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
    const pdf=await pdfjsLib.getDocument({data:new Uint8Array(bytes),useSystemFonts:true,disableFontFace:false}).promise;
-   const layoutMode=document.getElementById('pdfWordLayout')?.value||'visual';
+   const layoutMode=document.getElementById('pdfWordLayout')?.value||'editable-layout';
+   if(layoutMode==='editable-layout'){
+    // Hybrid editable-layout conversion:
+    // - Keep non-text page artwork as a floating page background image.
+    // - Mask text from that background and rebuild every text span/recognized word
+    //   as an independently editable Word text frame at its PDF page coordinates.
+    // This is the practical compromise between PDF's fixed canvas and Word's editable text model.
+    const chosenFont=document.getElementById('pdfWordFont')?.value||'Noto Sans Sinhala';
+    const mode=document.getElementById('pdfWordMode')?.value||'auto';
+    if(!window.Tesseract)throw Error('Sinhala OCR library could not load. Check your internet connection and reload.');
+    const sections=[],frameSpecs=[];let totalEditable=0,totalOCR=0,totalSkipped=0,ocrWorker=null;
+    const ensureOCR=async()=>{
+     if(ocrWorker)return ocrWorker;
+     ocrWorker=await Tesseract.createWorker('sin+eng',1,{logger:m=>{if(m.status==='recognizing text'&&btn)btn.innerHTML=`<span class="spinner"></span> Sinhala OCR · page ${m.page||''} · ${Math.round((m.progress||0)*100)}%`;}});
+     return ocrWorker;
+    };
+    const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+    const addFrame=(arr,text,x,y,w,h,fontSize,source)=>{
+     text=String(text||'').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').trim();
+     if(!text||!Number.isFinite(x)||!Number.isFinite(y)||!Number.isFinite(w)||!Number.isFinite(h))return;
+     arr.push({text,x:Math.max(0,x),y:Math.max(0,y),w:Math.max(8,w),h:Math.max(7,h),fontSize:clamp(fontSize||11,5,60),source});
+    };
+    const sampleBg=(ctx,x,y,w,h)=>{
+     const c=ctx.canvas,pts=[[x-2,y-2],[x+w+2,y-2],[x-2,y+h+2],[x+w+2,y+h+2],[x+w/2,y-2],[x+w/2,y+h+2]];
+     const vals=[];for(const [px,py] of pts){const ix=clamp(Math.round(px),0,c.width-1),iy=clamp(Math.round(py),0,c.height-1);try{const d=ctx.getImageData(ix,iy,1,1).data;vals.push([d[0],d[1],d[2]]);}catch{}}
+     if(!vals.length)return '#ffffff';
+     const med=k=>{const a=vals.map(v=>v[k]).sort((a,b)=>a-b);return a[Math.floor(a.length/2)];};
+     return `rgb(${med(0)},${med(1)},${med(2)})`;
+    };
+    try{
+     for(let pageNo=1;pageNo<=pdf.numPages;pageNo++){
+      if(btn)btn.innerHTML=`<span class="spinner"></span> Preparing editable page ${pageNo}/${pdf.numPages}`;
+      const page=await pdf.getPage(pageNo),baseVp=page.getViewport({scale:1});
+      const content=await page.getTextContent({includeMarkedContent:false,disableNormalization:false});
+      const native=[];let legacyHint=false,privateChars=false;
+      const styleNames=Object.values(content.styles||{}).map(st=>String(st.fontFamily||st.fontName||'')).join(' ');
+      legacyHint=/(?:\bfm[\w -]{1,24}|\bdl[\w -]{1,24}|kaputa|malithi|wijesekera)/i.test(styleNames);
+      for(const it of content.items||[]){
+       if(typeof it.str!=='string'||!it.str.trim()||!it.transform)continue;
+       if(/[\uE000-\uF8FF\uFFFD]/.test(it.str))privateChars=true;
+       const m=pdfjsLib.Util.transform(baseVp.transform,it.transform);
+       const angle=Math.atan2(m[1],m[0])*180/Math.PI;
+       if(Math.abs(angle)>12){totalSkipped++;continue;}
+       const height=Math.max(5,Math.hypot(m[2],m[3])||it.height||10);
+       const width=Math.max(4,Math.abs(Number(it.width)||height*it.str.length*.45));
+       const x=m[4],baseline=m[5],y=baseline-height*.93;
+       addFrame(native,it.str,x,y,width+Math.max(3,height*.28),height*1.62,height*.92,'pdf-text');
+      }
+      const useOCR=mode==='ocr'||native.length===0||privateChars||legacyHint;
+      const renderScale=Math.min(2.35,Math.sqrt(10500000/(baseVp.width*baseVp.height)));
+      const renderVp=page.getViewport({scale:renderScale});
+      const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d',{alpha:false});
+      canvas.width=Math.ceil(renderVp.width);canvas.height=Math.ceil(renderVp.height);
+      ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);
+      await page.render({canvasContext:ctx,viewport:renderVp}).promise;
+      let frames=native;
+      if(useOCR){
+       if(btn)btn.innerHTML=`<span class="spinner"></span> Recognizing Sinhala and English · page ${pageNo}/${pdf.numPages}`;
+       const worker=await ensureOCR(),recognized=await worker.recognize(canvas),words=recognized?.data?.words||[];
+       const ocrFrames=[];
+       for(const word of words){
+        const text=String(word.text||'').trim(),b=word.bbox;if(!text||!b)continue;
+        const x=b.x0/renderScale,y=b.y0/renderScale,w=(b.x1-b.x0)/renderScale,h=(b.y1-b.y0)/renderScale;
+        addFrame(ocrFrames,text,x,y,w+4,h*1.7,h*1.02,'ocr');
+       }
+       if(ocrFrames.length){frames=ocrFrames;totalOCR+=ocrFrames.length;}else if(native.length){frames=native;}
+      }
+      if(!frames.length)throw Error(`No editable text could be recognized on page ${pageNo}. This page may contain only drawings or very low-quality scans.`);
+      // Mask the original text while retaining logos, photos, lines, tables and other page artwork.
+      const maskFrames=useOCR?[...native,...frames]:frames;
+      for(const f of maskFrames){
+       const x=f.x*renderScale,y=f.y*renderScale,w=f.w*renderScale,h=f.h*renderScale;
+       const px=Math.max(0,x-1.2),py=Math.max(0,y-1.0),pw=Math.min(canvas.width-px,w+2.4),ph=Math.min(canvas.height-py,h+2.0);
+       if(pw<=0||ph<=0)continue;
+       ctx.fillStyle=sampleBg(ctx,px,py,pw,ph);ctx.fillRect(px,py,pw,ph);
+      }
+      const pageBlob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Could not prepare the page background image.')),'image/jpeg',.94));
+      const imageData=new Uint8Array(await pageBlob.arrayBuffer());
+      const pageWidthTwips=Math.round(baseVp.width*20),pageHeightTwips=Math.round(baseVp.height*20);
+      const imageWidth=baseVp.width*96/72,imageHeight=baseVp.height*96/72;
+      const bgRun=new docx.ImageRun({data:imageData,transformation:{width:imageWidth,height:imageHeight},floating:{horizontalPosition:{relative:docx.HorizontalPositionRelativeFrom.PAGE,offset:0},verticalPosition:{relative:docx.VerticalPositionRelativeFrom.PAGE,offset:0},wrap:{type:docx.WrapType.NONE},behindDocument:true,allowOverlap:true,lockAnchor:true,zIndex:0}});
+      const children=[new docx.Paragraph({children:[bgRun],spacing:{before:0,after:0}})];frameSpecs.push(null);
+      for(const f of frames){
+       const widthTwips=clamp(Math.round(f.w*20),160,31680),heightTwips=clamp(Math.round(f.h*20),180,31680);
+       const xTwips=clamp(Math.round(f.x*20),0,31680),yTwips=clamp(Math.round(f.y*20),0,31680);
+       const size=Math.round(f.fontSize*2);
+       children.push(new docx.Paragraph({children:[new docx.TextRun({text:f.text,font:chosenFont,size,color:'17243A'})],spacing:{before:0,after:0,line:100}}));
+       frameSpecs.push({x:xTwips,y:yTwips,w:widthTwips,h:heightTwips});totalEditable++;
+      }
+      sections.push({properties:{type:docx.SectionType.NEXT_PAGE,page:{size:{width:pageWidthTwips,height:pageHeightTwips},margin:{top:0,right:0,bottom:0,left:0}}},children});
+      canvas.width=1;canvas.height=1;
+     }
+    }finally{if(ocrWorker)await ocrWorker.terminate();}
+    const editableDoc=new docx.Document({creator:'SmartTools',title:baseName(first.name),description:'Hybrid PDF conversion: original page artwork with individually editable positioned text frames.',styles:{default:{document:{run:{font:chosenFont,size:22,color:'17243A'},paragraph:{spacing:{before:0,after:0}}}}},sections});
+    let editableBlob=await docx.Packer.toBlob(editableDoc);
+    editableBlob=await addWordTextFramePositions(editableBlob,frameSpecs);
+    editableBlob=await applyWordFontForAllScripts(editableBlob,chosenFont);
+    downloadBlob(editableBlob,baseName(first.name)+'-editable-layout.docx');
+    ok('Editable-layout Word document created.','Text is placed in individually editable Word frames over a background that retains the PDF page artwork. You can select, rewrite, delete and change the font of the converted text. Background photos/lines/logos remain part of the page image. Check OCR text and make small layout adjustments where needed.',`${pdf.numPages} page(s) · ${totalEditable} editable text frames · ${totalOCR} OCR words · positioned Word text`);return;
+   }
    if(layoutMode==='visual'){
     // Layout-preserving mode: render each PDF page and place it as a full-page image in DOCX.
     // This keeps Sinhala glyph shaping, original coordinates, columns, tables and line spacing visually intact.
@@ -335,7 +434,25 @@ async function processFileTool(id){
   throw Error('This PDF operation is not supported yet.');
  }catch(e){console.error(e);const msg=e?.message||'Unable to process this file.';showResult(`<div class="error-result"><b>We could not complete this conversion</b><p>${escapeHtml(msg)}</p><small>Your original file has not been changed.</small></div>`);}
  finally{finish();}
- }async function applyWordFontForAllScripts(blob,fontName){
+ }async function addWordTextFramePositions(blob,frameSpecs){
+ if(!window.JSZip)throw Error('The DOCX packaging library could not load.');
+ const zip=await JSZip.loadAsync(blob),file=zip.file('word/document.xml');
+ if(!file)throw Error('The generated Word document is missing its main content file.');
+ let xml=await file.async('string'),index=0;
+ const esc=n=>String(Math.max(0,Math.round(n)));
+ xml=xml.replace(/<w:p(?:\s[^>]*)?>[\s\S]*?<\/w:p>/g,p=>{
+  const spec=frameSpecs[index++];if(!spec)return p;
+  const pr=`<w:framePr w:w="${esc(spec.w)}" w:h="${esc(spec.h)}" w:hRule="exact" w:wrap="none" w:hAnchor="page" w:vAnchor="page" w:x="${esc(spec.x)}" w:y="${esc(spec.y)}" w:hSpace="0" w:vSpace="0"/>`;
+  if(/<w:pPr(?:\s[^>]*)?>/.test(p)){
+   // framePr belongs before spacing/indent/alignment properties in pPr.
+   return p.replace(/(<w:pPr(?:\s[^>]*)?>)/,`$1${pr}`);
+  }
+  return p.replace(/^(<w:p(?:\s[^>]*)?>)/,`$1<w:pPr>${pr}</w:pPr>`);
+ });
+ if(index<frameSpecs.length)throw Error('Could not position all editable text frames in the Word document.');
+ zip.file('word/document.xml',xml);
+ return await zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+}async function applyWordFontForAllScripts(blob,fontName){
  if(!window.JSZip)return blob;
  const zip=await JSZip.loadAsync(blob),font=String(fontName||'Noto Sans Sinhala').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
  const setAttr=(attrs,key,value)=>{const re=new RegExp('\\s'+key.replace(':','\\:')+'="[^"]*"','g');return attrs.replace(re,'')+` ${key}="${value}"`;};
